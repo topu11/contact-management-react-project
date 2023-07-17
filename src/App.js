@@ -7,7 +7,18 @@ import AddContact from './components/AddContact';
 
 function App() {
   const LOCAL_STORAGE_KEY='contactList';
- const [contacts,setcontacts]=useState( JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) ?? []);
+  const previous_contacts=localStorage.getItem(LOCAL_STORAGE_KEY);
+  let parsedJsonContacts;
+  if(previous_contacts)
+  {
+
+    parsedJsonContacts=JSON.parse(previous_contacts)
+  }else
+  {
+     parsedJsonContacts=[];
+  }
+
+ const [contacts,setcontacts]=useState(parsedJsonContacts);
 
  const addContactHandler = (contact) => {
   
@@ -17,12 +28,19 @@ function App() {
     useEffect(()=>{
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
     },[contacts]);
+    
+    const deleteContactHandler=(id)=>{
+      const filteredContacts=contacts.filter((contact)=>{
+        return contact.id !==id;
+      })
+      setcontacts(filteredContacts);
+    }
 
   return (
     <div className="ui container">
       <Header />
       <AddContact addContactHandler={addContactHandler}/>
-      <ContactList contacts={contacts} />
+      <ContactList contacts={contacts} deleteContactHandler={deleteContactHandler}/>
     </div>
   );
 }
