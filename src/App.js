@@ -11,7 +11,7 @@ import Header from "./components/Header";
 import ContactList from "./components/ContactList";
 import AddContact from "./components/AddContact";
 import ContactDetails from "./components/ContactDetails";
-
+import ContactDelete from "./components/ContactDelete";
 
 function App() {
   const LOCAL_STORAGE_KEY = "contactList";
@@ -55,15 +55,20 @@ function App() {
             Component={() => (
               <ContactList
                 contacts={contacts}
-                deleteContactHandler={deleteContactHandler}
               />
             )}
           />
 
           <Route
             path="/contactdetails/:id"
-            Component={()=>(<ContactDetails />)}
+            Component={() => <ContactDetails />}
           />
+          
+          <Route
+            path="/contactdelete/:id"
+            Component={(props) => <ContactDelete {...props}  deleteContactHandler={deleteContactHandler}/>}
+          />
+
         </Routes>
 
         {/* <AddContact addContactHandler={addContactHandler}/>

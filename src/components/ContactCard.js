@@ -13,11 +13,12 @@ const ContactCard = (props) => {
           <div>{email}</div>
         </Link>
       </div>
+      <Link to={`/contactdelete/${id}`} state={{ contact: props.contact }}>
       <i
         className="trash alternate outline icon"
         style={{ color: "red", marginTop: "7px" }}
-        onClick={() => props.delteContactHandler(id)}
       ></i>
+      </Link>
     </div>
   );
 };
